@@ -28,9 +28,9 @@ object clock {
     private var timer: Timer = _
 
     override def start() = {
-      timer = new Timer()
+      timer = new Timer
       // The clock model runs onTick every 1000 milliseconds
-      timer.schedule(new TimerTask() {
+      timer.schedule(new TimerTask {
         override def run() = listener.onTick() // fire event
       }, /*initial delay*/ DELAY, /*periodic delay*/ DELAY)
     }

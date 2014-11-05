@@ -68,6 +68,8 @@ object state {
 
     // known states
 
+    // TODO consider decoupling model from generated Android resource object (R)
+
     private val STOPPED = new StopwatchState {
       override def onStartStop() = { actionStart() ; toRunningState() }
       override def onLapReset()  = { actionReset() ; toStoppedState() }

@@ -17,6 +17,9 @@ import model.ConcreteStopwatchModelFacade
  */
 class MainActivity extends Activity with TypedActivity with StopwatchUIUpdateListener {
 
+  // TODO consider separating lifecycle and event handling responsibilities
+  // (as in clickcounter)
+
   private val TAG = "stopwatch-android-activity"
 
   /**
