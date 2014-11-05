@@ -29,6 +29,7 @@
     * Implementing state-dependent behavior: [State pattern](http://sourcemaking.com/design_patterns/state)
     * Hiding complexity in the model from the adapter: [Façade pattern](http://sourcemaking.com/design_patterns/facade)
     * Representing tasks as objects: [Command pattern](http://sourcemaking.com/design_patterns/command)
+	* Restoring an object from an externalized snapshot: [Memento pattern](http://sourcemaking.com/design_patterns/memento)
 * [Relevant class-level design principles](http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod)
     * Dependency Inversion Principle (DIP)
     * Single Responsibility Principle (SRP)
