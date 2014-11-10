@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lucoodevcourse/stopwatch-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/stopwatch-android-scala)
+
 # Learning Objectives
 
 ## Modeling
