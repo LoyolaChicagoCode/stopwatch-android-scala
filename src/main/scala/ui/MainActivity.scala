@@ -30,14 +30,14 @@ class MainActivity extends Activity with TypedActivity with StopwatchUIUpdateLis
     lazy val listener = MainActivity.this
   }
 
-  override def onCreate(savedInstanceState: Bundle) {
+  override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     Log.i(TAG, "onCreate")
     // inject the (implicit) dependency on the view
     setContentView(R.layout.main)
   }
 
-  override def onStart() {
+  override def onStart() = {
     super.onStart()
     Log.i(TAG, "onStart")
     model.onStart()
@@ -51,7 +51,7 @@ class MainActivity extends Activity with TypedActivity with StopwatchUIUpdateLis
    * usually with the help of the graphical layout editor; the connection also
    * shows up in the XML source of the view layout.
    */
-  def onStartStop(view: View) = model.onStartStop()
+  def onStartStop(view: View): Unit = model.onStartStop()
 
   /** Forwards the semantic ``onLapReset`` event to the model. */
   def onLapReset(view: View): Unit = model.onLapReset()
