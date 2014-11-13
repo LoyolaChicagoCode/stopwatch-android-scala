@@ -25,7 +25,7 @@ trait AbstractClockModelSpecs extends JUnitSuite {
     // clock has its own thread
     val i = new AtomicInteger(0)
     val model = fixture(new OnTickListener {
-      override def onTick() { i.incrementAndGet() }
+      override def onTick() = i.incrementAndGet()
     })
     Thread.sleep(5500)
     assertEquals(0, i.get)
@@ -39,7 +39,7 @@ trait AbstractClockModelSpecs extends JUnitSuite {
   @Test def testRunning(): Unit = {
     val i = new AtomicInteger(0)
     val model = fixture(new OnTickListener {
-      override def onTick() { i.incrementAndGet() }
+      override def onTick() = i.incrementAndGet()
     })
     model.start()
     Thread.sleep(5500)

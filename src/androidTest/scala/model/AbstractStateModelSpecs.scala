@@ -29,7 +29,7 @@ trait AbstractStateModelSpecs extends JUnitSuite {
    * Verifies that we're initially in the stopped state (and told the listener
    * about it).
    */
-  @Test def testPreconditions() = {
+  @Test def testPreconditions(): Unit = {
     val dependency = fixtureDependency()
     val model = fixtureSUT(dependency)
     model.actionInit()

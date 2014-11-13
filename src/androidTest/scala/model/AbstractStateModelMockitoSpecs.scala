@@ -41,7 +41,7 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
    * Verifies that we're initially in the stopped state (and told the listener
    * about it).
    */
-  @Test def testPreconditions() = {
+  @Test def testPreconditions(): Unit = {
     val dep = fixtureDependency()
     val model = fixtureSUT(dep)
     model.actionInit()
