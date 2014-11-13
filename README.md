@@ -16,7 +16,7 @@
 * Internal events from background timers
 * [Concurrency issues: single-thread rule of accessing/updating the view in the GUI thread](http://stackoverflow.com/questions/11772658/why-is-a-single-threaded-model-used-to-update-the-ui-as-main-thread)
 * [Android activity lifecycle](http://developer.android.com/training/basics/activity-lifecycle/starting.html)
-  and [preserving state under rotation](http://developer.android.com/training/basics/activity-lifecycle/recreating.html)
+  and [preserving state automatically under rotation](http://developer.android.com/guide/topics/resources/runtime-changes.html)
 
 ## Architecture and Design
 

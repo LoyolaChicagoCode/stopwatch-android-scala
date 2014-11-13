@@ -43,23 +43,6 @@ class MainActivity extends Activity with TypedActivity with StopwatchUIUpdateLis
     model.onStart()
   }
 
-  private val KEY = "stopwatch-memento"
-
-  // TODO restore complete clock state on rotation
-
-  override def onSaveInstanceState(savedInstanceState: Bundle): Unit = {
-    Log.i(TAG, "onSaveInstanceState")
-    model.onStop()
-    savedInstanceState.putSerializable(KEY, model.getMemento)
-    super.onSaveInstanceState(savedInstanceState)
-  }
-
-  override def onRestoreInstanceState(savedInstanceState: Bundle): Unit = {
-    super.onRestoreInstanceState(savedInstanceState)
-    Log.i(TAG, "onRestoreInstanceState")
-    model.restoreFromMemento(savedInstanceState.getSerializable(KEY).asInstanceOf[StopwatchMemento])
-  }
-
   /**
    * Forwards the semantic ``onStartStop`` event to the model.
    * (Semantic as opposed to, say, a concrete button press.)

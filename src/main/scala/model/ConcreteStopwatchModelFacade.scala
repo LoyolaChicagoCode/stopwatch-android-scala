@@ -1,7 +1,7 @@
 package edu.luc.etl.cs313.scala.stopwatch
 package model
 
-import common.{StopwatchModel, StopwatchMemento}
+import common.StopwatchModel
 import time._
 import clock._
 import state.{DefaultStopwatchStateMachine, StopwatchStateMachine}
@@ -21,15 +21,4 @@ trait ConcreteStopwatchModelFacade extends StopwatchModel {
   // methods in Startable
   override def onStart()     = stateMachine.actionInit()
   override def onStop()      = clockModel.stop()
-
-  override def getMemento() = new StopwatchMemento {
-    override val lapTime: Int = timeModel.getLaptime
-    override val runTime: Int = timeModel.getRuntime
-  }
-
-  override def restoreFromMemento(memento: StopwatchMemento): Unit = {
-    timeModel.setRuntime(memento.runTime)
-    timeModel.setLaptime(memento.lapTime)
-    stateMachine.actionUpdateView()
-  }
 }
