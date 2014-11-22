@@ -12,7 +12,7 @@ instrumentSettings
 
 name := "stopwatch-android-scala"
 
-version := "0.0.1"
+version := "0.1"
 
 scalacOptions in Compile ++= Seq("-feature", "-unchecked", "-deprecation")
 
@@ -32,8 +32,6 @@ val androidJars = (platformJars in Android, baseDirectory) map {
 // Make the actually targeted Android jars available to Robolectric for shadowing.
 managedClasspath in Test <++= androidJars
 
-managedClasspath in ScoverageCompile <++= androidJars
-
 // With this option, we cannot have dependencies in the test scope!
 debugIncludesTests in Android := false
 
@@ -51,3 +49,11 @@ proguardOptions in Android ++= Seq(
 )
 
 apkbuildExcludes in Android += "LICENSE.txt"
+
+instrumentSettings
+
+ScoverageKeys.excludedPackages in ScoverageCompile := """.*\.TR.*;.*\.TypedLayoutInflater;.*\.TypedResource;.*\.TypedViewHolder;.*\.TypedLayoutInflater"""
+
+org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
+
+managedClasspath in ScoverageCompile <++= androidJars
