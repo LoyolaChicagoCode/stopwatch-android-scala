@@ -1,13 +1,13 @@
-[![Build Status](https://travis-ci.org/lucoodevcourse/stopwatch-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/stopwatch-android-scala) 
-[![Coverage Status](https://img.shields.io/coveralls/lucoodevcourse/stopwatch-android-scala.svg)](https://coveralls.io/r/lucoodevcourse/stopwatch-android-scala) 
-[![Download](https://api.bintray.com/packages/lucoodevcourse/generic/stopwatch-android-scala/images/download.svg) ](https://bintray.com/lucoodevcourse/generic/stopwatch-android-scala/_latestVersion)
+[![Build Status](https://travis-ci.org/LoyolaChicagoCode/stopwatch-android-scala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/stopwatch-android-scala) 
+[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/stopwatch-android-scala.svg)](https://coveralls.io/r/LoyolaChicagoCode/stopwatch-android-scala) 
+[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/stopwatch-android-scala/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/stopwatch-android-scala/_latestVersion)
 
 # Learning Objectives
 
 ## Modeling
 
 * Modeling state-dependent behavior with [state machine diagrams](http://en.wikipedia.org/wiki/UML_state_machine)
-  (see also [here](/lucoodevcourse/stopwatch-android-scala/src/default/doc))
+  (see also [here](/LoyolaChicagoCode/stopwatch-android-scala/src/default/doc))
 * Distinguishing between view states and (behavioral) model states 
   (see also [here](http://cder.cs.luc.edu/html/chapter.html#interactive-behaviors-and-implicit-concurrency-with-internal-timers))
 
@@ -40,10 +40,10 @@
     * Interface Segregation Principle (ISP)
 * Package-level architecture and [relevant principles](http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod)
     * [Dependency graph](http://en.wikipedia.org/wiki/Dependency_graph)
-      (see also [here](/lucoodevcourse/stopwatch-android-scala/src/default/doc))
+      (see also [here](/LoyolaChicagoCode/stopwatch-android-scala/src/default/doc))
     * Stable Dependencies Principle (SDP)
     * Acyclic Dependencies Principle (ADP)
-* [Architectural journey](/lucoodevcourse/stopwatch-android-scala/commits)
+* [Architectural journey](/LoyolaChicagoCode/stopwatch-android-scala/commits)
 
 ## Testing
 
