@@ -61,5 +61,5 @@
 
 # Building and Running
 
-Please refer to [these notes](http://lucoodevcourse.bitbucket.org/notes/scalaandroiddev.html) for details.
+Please refer to [these notes](http://lucoodevcourse.github.io/notes/scalaandroiddev.html) for details.
 
