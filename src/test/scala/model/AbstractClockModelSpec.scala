@@ -19,7 +19,7 @@ trait AbstractClockModelSpec extends JUnitSuite {
 
   /** Verifies that a stopped clock does not emit any tick events. */
   @Test def stoppedClockDoesntTick(): Unit = {
-    // use a thread-safe object because the timer inside the
+    // use a thread-safe variable because the timer inside the
     // clock has its own thread
     val i = new AtomicInteger(0)
     val model = fixture(new OnTickListener {

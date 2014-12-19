@@ -4,6 +4,7 @@ import state.DefaultStopwatchStateMachine
 
 /** A concrete testcase subclass for StatelessBoundedCounter. */
 class DefaultStateModelSpec extends AbstractStateModelSpec {
-  override def fixtureSUT(dependency: UnifiedMockDependency) =
+  override def createSUT(dependency: UnifiedFakeDependency) =
     new DefaultStopwatchStateMachine(dependency, dependency, dependency)
 }
+

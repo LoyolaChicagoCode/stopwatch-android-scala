@@ -7,31 +7,35 @@ import org.scalatest.junit.JUnitSuite
 import common.{ModelStateId, StopwatchUIUpdateListener}
 import clock.ClockModel
 import state.StopwatchStateMachine
-import time.TimeModel
+import time.{DefaultTimeModel, TimeModel}
 import ModelStateId._
 
 /**
  * An abstract unit test for the state machine abstraction.
- * This is a unit test of an object with multiple dependencies;
- * we use a unified mock object to satisfy all dependencies
- * and verify that the state machine behaved as expected.
+ * This is a unit test of an object with multiple dependencies.
+ * We use a unified fake object to satisfy all dependencies
+ * and verify that the state machine behaved as expected;
+ * this design is questionable but acceptable in this relatively
+ * simple situation.
  * This also follows the XUnit Testcase Superclass pattern.
  */
 trait AbstractStateModelSpec extends JUnitSuite {
 
-  /** Creates an instance of the home-grown unified mock dependency. */
-  def fixtureDependency() = new UnifiedMockDependency
-
   /** Creates an instance of the SUT. */
-  def fixtureSUT(dependency: UnifiedMockDependency): StopwatchStateMachine
+  def createSUT(dependency: UnifiedFakeDependency): StopwatchStateMachine
+
+  /** Creates an instance of the home-grown unified mock dependency. */
+  def fixtures(): (StopwatchStateMachine, UnifiedFakeDependency) = {
+    val dependency = new UnifiedFakeDependency
+    (createSUT(dependency), dependency)
+  }
 
   /**
    * Verifies that we're initially in the stopped state (and told the listener
    * about it).
    */
   @Test def preconditionsAreMet(): Unit = {
-    val dependency = fixtureDependency()
-    val model = fixtureSUT(dependency)
+    val (model, dependency) = fixtures()
     model.actionInit()
     assertEquals(STOPPED, dependency.state)
   }
@@ -41,8 +45,7 @@ trait AbstractStateModelSpec extends JUnitSuite {
    * expect time 5.
    */
   @Test def scenarioStartWaitStopWorks(): Unit = {
-    val dependency = fixtureDependency()
-    val model = fixtureSUT(dependency)
+    val (model, dependency) = fixtures()
     model.actionInit()
     assertEquals(0, dependency.time)
     // directly invoke the button press event handler methods
@@ -57,8 +60,7 @@ trait AbstractStateModelSpec extends JUnitSuite {
    * expect time 5, press lap, expect time 9, press lap, expect time 0.
    */
   @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
-    val dependency = fixtureDependency()
-    val model = fixtureSUT(dependency)
+    val (model, dependency) = fixtures()
     model.actionInit()
     assertEquals(0, dependency.time)
     // directly invoke the button press event handler methods on model
@@ -88,30 +90,17 @@ trait AbstractStateModelSpec extends JUnitSuite {
 }
 
 /**
- * Manually implemented mock object that unifies the three dependencies of the
- * stopwatch state machine model. The three dependencies correspond to the three
- * interfaces this mock object implements.
+ * Manually implemented single fake object that unifies the three
+ * dependencies of the stopwatch state machine model.
+ * The three dependencies correspond to the three interfaces
+ * this fake object implements.
  */
-class UnifiedMockDependency extends TimeModel with ClockModel with StopwatchUIUpdateListener {
-  private var timeValue = -1
-  private var stateId: ModelStateId = _
-  private var runningTime = 0
-  private var lapTime = -1
-  private var started = false
-
-  def time(): Int = timeValue
-  def state(): ModelStateId = stateId
-  def isStarted(): Boolean = started
-
-  override def updateTime(timeValue: Int): Unit = this.timeValue = timeValue
-  override def updateState(stateId: ModelStateId): Unit = this.stateId = stateId
-  override def start(): Unit = started = true
-  override def stop(): Unit = started = false
-  override def resetRuntime(): Unit = runningTime = 0
-  override def incRuntime(): Unit = runningTime += 1
-  override def getRuntime(): Int = runningTime
-  override def setLaptime(): Unit = lapTime = runningTime
-  override def getLaptime(): Int  = lapTime
-  override def setLaptime(value: Int): Unit = ()
-  override def setRuntime(value: Int): Unit = ()
+class UnifiedFakeDependency extends DefaultTimeModel with ClockModel with StopwatchUIUpdateListener {
+  var time = -1
+  var state: ModelStateId = _
+  override def updateTime(timeValue: Int): Unit = this.time = timeValue
+  override def updateState(stateId: ModelStateId): Unit = this.state = stateId
+  var isStarted = false
+  override def start(): Unit = isStarted = true
+  override def stop(): Unit = isStarted = false
 }
