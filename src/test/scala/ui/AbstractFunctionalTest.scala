@@ -4,7 +4,7 @@ package ui
 import android.widget.{Button, TextView}
 import org.junit.Assert._
 import org.junit.Test
-import common.Constants.SEC_PER_MIN
+import common.TimeConstants.SEC_PER_MIN
 
 /**
  * Abstract GUI-level test superclass of several essential stopwatch scenarios.

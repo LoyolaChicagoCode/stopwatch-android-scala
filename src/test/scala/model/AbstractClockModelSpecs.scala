@@ -1,13 +1,11 @@
-package edu.luc.etl.cs313.scala.stopwatch
-package model
+package edu.luc.etl.cs313.scala.stopwatch.model
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import edu.luc.etl.cs313.scala.stopwatch.model.clock.OnTickListener
 import org.junit.Assert._
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
-import clock.ClockModel
+import clock.{ClockModel, OnTickListener}
 
 /**
  * An abstract unit test for the clock model abstraction.

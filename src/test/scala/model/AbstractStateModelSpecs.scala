@@ -4,11 +4,11 @@ package model
 import org.junit.Assert._
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
-import ui.R
-import common.StopwatchUIUpdateListener
+import common.{ModelStateId, StopwatchUIUpdateListener}
 import clock.ClockModel
 import state.StopwatchStateMachine
 import time.TimeModel
+import ModelStateId._
 
 /**
  * An abstract unit test for the state machine abstraction.
@@ -33,7 +33,7 @@ trait AbstractStateModelSpecs extends JUnitSuite {
     val dependency = fixtureDependency()
     val model = fixtureSUT(dependency)
     model.actionInit()
-    assertEquals(R.string.STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.getState)
   }
 
   /**
@@ -63,25 +63,25 @@ trait AbstractStateModelSpecs extends JUnitSuite {
     assertEquals(0, dependency.getTime)
     // directly invoke the button press event handler methods on model
     model.onStartStop()
-    assertEquals(R.string.RUNNING, dependency.getState)
+    assertEquals(RUNNING, dependency.getState)
     assertTrue(dependency.isStarted)
     (1 to 5) foreach { _ => model.onTick() }
     assertEquals(5, dependency.getTime)
     model.onLapReset()
-    assertEquals(R.string.LAP_RUNNING, dependency.getState)
+    assertEquals(LAP_RUNNING, dependency.getState)
     assertTrue(dependency.isStarted)
     (1 to 4) foreach { _ => model.onTick() }
     assertEquals(5, dependency.getTime)
     model.onStartStop()
-    assertEquals(R.string.LAP_STOPPED, dependency.getState)
+    assertEquals(LAP_STOPPED, dependency.getState)
     assertFalse(dependency.isStarted)
     assertEquals(5, dependency.getTime)
     model.onLapReset()
-    assertEquals(R.string.STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.getState)
     assertFalse(dependency.isStarted)
     assertEquals(9, dependency.getTime)
     model.onLapReset()
-    assertEquals(R.string.STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.getState)
     assertFalse(dependency.isStarted)
     assertEquals(0, dependency.getTime)
   }
@@ -94,17 +94,17 @@ trait AbstractStateModelSpecs extends JUnitSuite {
  */
 class UnifiedMockDependency extends TimeModel with ClockModel with StopwatchUIUpdateListener {
   private var timeValue = -1
-  private var stateId = -1
+  private var stateId: ModelStateId = _
   private var runningTime = 0
   private var lapTime = -1
   private var started = false
 
   def getTime(): Int = timeValue
-  def getState(): Int = stateId
+  def getState(): ModelStateId = stateId
   def isStarted(): Boolean = started
 
   override def updateTime(timeValue: Int): Unit = this.timeValue = timeValue
-  override def updateState(stateId: Int): Unit = this.stateId = stateId
+  override def updateState(stateId: ModelStateId): Unit = this.stateId = stateId
   override def start(): Unit = started = true
   override def stop(): Unit = started = false
   override def resetRuntime(): Unit = runningTime = 0

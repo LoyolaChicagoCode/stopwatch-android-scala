@@ -11,7 +11,7 @@ import common._
  * this has no class-level dependencies on Android and is separate from the view
  * updater by leaving the updateView method abstract.
  */
-trait InputListener extends StopwatchUIUpdateListener {
+trait InputListener {
 
   protected val model: StopwatchModel
 
@@ -33,7 +33,7 @@ trait InputListener extends StopwatchUIUpdateListener {
  * A view updater mixin as part of the Adapter in the Model-View-Adapter pattern.
  * It implements the `updateView` method to update the view from the model.
  */
-trait ViewUpdater extends Activity with TypedActivityHolder {
+trait ViewUpdater extends Activity with TypedActivityHolder with StopwatchUIUpdateListener {
 
   /**
    * Updates the seconds and minutes in the UI. It is this UI adapter's
@@ -42,8 +42,8 @@ trait ViewUpdater extends Activity with TypedActivityHolder {
   def updateTime(time: Int): Unit = runOnUiThread {
     val tvS = findView(TR.seconds)
     val tvM = findView(TR.minutes)
-    val seconds = time % Constants.SEC_PER_MIN
-    val minutes = time / Constants.SEC_PER_MIN
+    val seconds = time % TimeConstants.SEC_PER_MIN
+    val minutes = time / TimeConstants.SEC_PER_MIN
     tvS.setText((seconds / 10).toString + (seconds % 10).toString)
     tvM.setText((minutes / 10).toString + (minutes % 10).toString)
   }
@@ -52,9 +52,9 @@ trait ViewUpdater extends Activity with TypedActivityHolder {
    * Updates the state name shown in the UI. It is this UI adapter's
    * responsibility to schedule these incoming events on the UI thread.
    */
-  def updateState(stateId: Int): Unit = runOnUiThread {
+  def updateState(stateId: ModelStateId): Unit = runOnUiThread {
     val stateName = findView(TR.stateName)
-    stateName.setText(getString(stateId))
+    stateName.setText(getString(asResourceId(stateId)))
   }
 
   /** Wraps a block of code in a Runnable and runs it on the UI thread. */
@@ -62,4 +62,14 @@ trait ViewUpdater extends Activity with TypedActivityHolder {
     runOnUiThread(new Runnable() {
       override def run(): Unit = block
     })
+
+  import ModelStateId._
+
+  /** Transforms a model state to an Android resource ID. */
+  private def asResourceId(stateId: ModelStateId): Int = stateId match {
+    case STOPPED => R.string.STOPPED
+    case RUNNING => R.string.STOPPED
+    case LAP_RUNNING => R.string.STOPPED
+    case LAP_STOPPED => R.string.STOPPED
+  }
 }

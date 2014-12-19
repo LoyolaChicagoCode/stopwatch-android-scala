@@ -1,7 +1,7 @@
 package edu.luc.etl.cs313.scala.stopwatch
 package model
 
-import common.Constants._
+import common.TimeConstants._
 
 /** Contains the components of the passive time model. */
 object time {

@@ -19,7 +19,7 @@ package object common {
    */
   trait StopwatchUIUpdateListener {
     def updateTime(timeValue: Int): Unit
-    def updateState(stateId: Int): Unit
+    def updateState(stateId: ModelStateId): Unit
   }
 
   /** A component with a start/stop lifecycle tied to the app. */

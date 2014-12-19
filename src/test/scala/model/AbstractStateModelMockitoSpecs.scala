@@ -6,8 +6,8 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
-import ui.R
 import common.StopwatchUIUpdateListener
+import common.ModelStateId._
 import clock.ClockModel
 import state.StopwatchStateMachine
 import time.TimeModel
@@ -45,7 +45,7 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
     val dep = fixtureDependency()
     val model = fixtureSUT(dep)
     model.actionInit()
-    verify(dep.uiUpdateListener).updateState(R.string.STOPPED)
+    verify(dep.uiUpdateListener).updateState(STOPPED)
     verify(dep.uiUpdateListener).updateTime(0)
     verifyNoMoreInteractions(dep.uiUpdateListener, dep.clockModel)
   }
@@ -61,11 +61,11 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
     model.actionInit()
     verify(dep.clockModel, never).start()
     verify(dep.timeModel, never).incRuntime()
-    verify(dep.uiUpdateListener).updateState(R.string.STOPPED)
+    verify(dep.uiUpdateListener).updateState(STOPPED)
     // directly invoke the button press event handler methods
     model.onStartStop()
     verify(dep.clockModel).start()
-    verify(dep.uiUpdateListener).updateState(R.string.RUNNING)
+    verify(dep.uiUpdateListener).updateState(RUNNING)
     (1 to t) foreach { _ => model.onTick() }
     verify(dep.timeModel, times(t)).incRuntime()
     verify(dep.uiUpdateListener, times(t + 1)).updateTime(anyInt)
@@ -85,31 +85,31 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
     model.actionInit()
     verify(dep.clockModel, never).start()
     verify(dep.clockModel, never).stop()
-    verify(dep.uiUpdateListener).updateState(R.string.STOPPED)
+    verify(dep.uiUpdateListener).updateState(STOPPED)
     verify(dep.timeModel, never).incRuntime()
     verify(dep.uiUpdateListener).updateTime(0)
     when(dep.timeModel.getRuntime).thenReturn(t1)
     // directly invoke the button press event handler methods on model
     model.onStartStop()
     verify(dep.clockModel).start()
-    verify(dep.uiUpdateListener).updateState(R.string.RUNNING)
+    verify(dep.uiUpdateListener).updateState(RUNNING)
     (1 to t1) foreach { _ => model.onTick() }
     verify(dep.timeModel, times(t1)).incRuntime()
     verify(dep.uiUpdateListener, times(t1)).updateTime(t1)
     when(dep.timeModel.getRuntime).thenReturn(t2)
     when(dep.timeModel.getLaptime).thenReturn(t1)
     model.onLapReset()
-    verify(dep.uiUpdateListener).updateState(R.string.LAP_RUNNING)
+    verify(dep.uiUpdateListener).updateState(LAP_RUNNING)
     (t1 + 1 to t2) foreach { _ => model.onTick() }
     verify(dep.timeModel, times(t2)).incRuntime()
     verify(dep.uiUpdateListener, times(t2)).updateTime(t1)
     model.onStartStop()
     verify(dep.clockModel).stop()
-    verify(dep.uiUpdateListener).updateState(R.string.LAP_STOPPED)
+    verify(dep.uiUpdateListener).updateState(LAP_STOPPED)
     verify(dep.timeModel, times(t2)).incRuntime()
     when(dep.timeModel.getRuntime).thenReturn(0)
     model.onLapReset()
-    verify(dep.uiUpdateListener, times(2)).updateState(R.string.STOPPED)
+    verify(dep.uiUpdateListener, times(2)).updateState(STOPPED)
     verify(dep.uiUpdateListener, times(2)).updateTime(0)
     verifyNoMoreInteractions(dep.clockModel)
   }

@@ -1,8 +1,7 @@
 package edu.luc.etl.cs313.scala.stopwatch
 package model
 
-import common.{StopwatchUIUpdateListener, StopwatchUIListener}
-import edu.luc.etl.cs313.scala.stopwatch.ui.R
+import common._
 import time.TimeModel
 import clock.{ClockModel, OnTickListener}
 
@@ -23,7 +22,7 @@ object state {
   /** A state in a state machine. This interface is part of the State pattern. */
   trait StopwatchState extends StopwatchUIListener with OnTickListener {
     def updateView(): Unit
-    def getId(): Int
+    def getId(): ModelStateId
   }
 
   /** An implementation of the state machine for the stopwatch. */
@@ -62,14 +61,12 @@ object state {
 
     // known states
 
-    // TODO consider decoupling model from generated Android resource object (R)
-
     private object STOPPED extends StopwatchState {
       override def onStartStop() = { actionStart() ; goToState(RUNNING) }
       override def onLapReset()  = { actionReset() ; goToState(STOPPED) }
       override def onTick()      = throw new UnsupportedOperationException("onTick")
       override def updateView()  = updateUIRuntime()
-      override def getId()       = R.string.STOPPED
+      override def getId()       = ModelStateId.STOPPED
     }
 
     private object RUNNING extends StopwatchState {
@@ -77,7 +74,7 @@ object state {
       override def onLapReset()  = { actionLap() ; goToState(LAP_RUNNING) }
       override def onTick()      = { actionInc() ; goToState(RUNNING) }
       override def updateView()  = updateUIRuntime()
-      override def getId()       = R.string.RUNNING
+      override def getId()       = ModelStateId.RUNNING
     }
 
     private object LAP_RUNNING extends StopwatchState {
@@ -85,7 +82,7 @@ object state {
       override def onLapReset()  = { goToState(RUNNING) ; actionUpdateView() }
       override def onTick()      = { actionInc() ; goToState(LAP_RUNNING) }
       override def updateView()  = updateUILaptime()
-      override def getId()       = R.string.LAP_RUNNING
+      override def getId()       = ModelStateId.LAP_RUNNING
     }
 
     private object LAP_STOPPED extends StopwatchState {
@@ -93,7 +90,7 @@ object state {
       override def onLapReset()  = { goToState(STOPPED) ; actionUpdateView() }
       override def onTick()      = throw new UnsupportedOperationException("onTick")
       override def updateView()  = updateUILaptime()
-      override def getId()       = R.string.LAP_STOPPED
+      override def getId()       = ModelStateId.LAP_STOPPED
     }
   }
 }

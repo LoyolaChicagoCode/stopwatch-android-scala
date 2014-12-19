@@ -1,5 +1,4 @@
-package edu.luc.etl.cs313.scala.stopwatch
-package model
+package edu.luc.etl.cs313.scala.stopwatch.model
 
 import java.util.{TimerTask, Timer}
 

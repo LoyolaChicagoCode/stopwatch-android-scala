@@ -4,7 +4,7 @@ package model
 import org.junit.Assert._
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
-import common.Constants._
+import common.TimeConstants._
 import time.TimeModel
 
 /**
