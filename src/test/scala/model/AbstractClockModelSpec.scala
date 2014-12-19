@@ -13,12 +13,12 @@ import clock.{ClockModel, OnTickListener}
  * we create anonymous listeners to satisfy the dependency.
  * This also follows the XUnit Testcase Superclass pattern.
  */
-trait AbstractClockModelSpecs extends JUnitSuite {
+trait AbstractClockModelSpec extends JUnitSuite {
 
   def fixture(listener: OnTickListener): ClockModel
 
   /** Verifies that a stopped clock does not emit any tick events. */
-  @Test def testStopped(): Unit = {
+  @Test def stoppedClockDoesntTick(): Unit = {
     // use a thread-safe object because the timer inside the
     // clock has its own thread
     val i = new AtomicInteger(0)
@@ -34,7 +34,7 @@ trait AbstractClockModelSpecs extends JUnitSuite {
    *
    * @throws InterruptedException
    */
-  @Test def testRunning(): Unit = {
+  @Test def runningClockTicksOncePerSec(): Unit = {
     val i = new AtomicInteger(0)
     val model = fixture(new OnTickListener {
       override def onTick() = i.incrementAndGet()

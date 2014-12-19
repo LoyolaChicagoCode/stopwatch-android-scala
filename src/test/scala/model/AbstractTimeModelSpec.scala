@@ -12,19 +12,19 @@ import time.TimeModel
  * This is a simple unit test of an object without dependencies.
  * This follows the XUnit Testcase Superclass pattern.
  */
-trait AbstractTimeModelSpecs extends JUnitSuite {
+trait AbstractTimeModelSpec extends JUnitSuite {
 
   def fixture(): TimeModel
 
   /** Verifies that runtime and laptime are initially 0 or less. */
-  @Test def testPreconditions(): Unit = {
+  @Test def preconditionsAreMet(): Unit = {
     val model = fixture()
     assertEquals(0, model.getRuntime)
     assertTrue(model.getLaptime <= 0)
   }
 
   /** Verifies that runtime is incremented correctly. */
-  @Test def testIncrementRuntimeOne(): Unit = {
+  @Test def incrementRuntimeByOneWorks(): Unit = {
     val model = fixture()
     val rt = model.getRuntime
     val lt = model.getLaptime
@@ -34,7 +34,7 @@ trait AbstractTimeModelSpecs extends JUnitSuite {
   }
 
   /** Verifies that runtime turns over correctly. */
-  @Test def testIncrementRuntimeMany(): Unit = {
+  @Test def incrementRuntimeByManyWorks(): Unit = {
     val model = fixture()
     val rt = model.getRuntime
     val lt = model.getLaptime
@@ -44,7 +44,7 @@ trait AbstractTimeModelSpecs extends JUnitSuite {
   }
 
   /** Verifies that laptime works correctly. */
-  @Test def testLaptime(): Unit = {
+  @Test def runtimeIsSeparateFromLaptime(): Unit = {
     val model = fixture()
     val rt = model.getRuntime
     val lt = model.getLaptime

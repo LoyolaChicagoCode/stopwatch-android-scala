@@ -15,14 +15,14 @@ object state {
    * This interface is part of the State pattern.
    */
   trait StopwatchStateMachine extends StopwatchUIListener with OnTickListener with Initializable {
-    def getState(): StopwatchState
+    def state(): StopwatchState
     def actionUpdateView(): Unit
   }
 
   /** A state in a state machine. This interface is part of the State pattern. */
   trait StopwatchState extends StopwatchUIListener with OnTickListener {
     def updateView(): Unit
-    def getId(): ModelStateId
+    def id(): ModelStateId
   }
 
   /** An implementation of the state machine for the stopwatch. */
@@ -33,26 +33,26 @@ object state {
   ) extends StopwatchStateMachine with Serializable {
 
     /** The current internal state of this adapter component. Part of the State pattern. */
-    private var state: StopwatchState = _
+    private var st: StopwatchState = _
 
     protected def goToState(state: StopwatchState): Unit = {
-      this.state = state
-      uiUpdateListener.updateState(state.getId)
+      this.st = state
+      uiUpdateListener.updateState(state.id)
     }
 
-    def getState(): StopwatchState = state
+    def state(): StopwatchState = st
 
     // forward event uiUpdateListener methods to the current state
-    override def onStartStop(): Unit = state.onStartStop()
-    override def onLapReset(): Unit  = state.onLapReset()
-    override def onTick(): Unit      = state.onTick()
+    override def onStartStop(): Unit = st.onStartStop()
+    override def onLapReset(): Unit  = st.onLapReset()
+    override def onTick(): Unit      = st.onTick()
 
     def updateUIRuntime(): Unit = uiUpdateListener.updateTime(timeModel.getRuntime)
     def updateUILaptime(): Unit = uiUpdateListener.updateTime(timeModel.getLaptime)
 
     // actions
     override def actionInit(): Unit       = { goToState(STOPPED) ; actionReset() }
-    override def actionUpdateView(): Unit = state.updateView()
+    override def actionUpdateView(): Unit = st.updateView()
     def actionReset(): Unit          = { timeModel.resetRuntime() ; actionUpdateView() }
     def actionStart(): Unit          = { clockModel.start() }
     def actionStop(): Unit           = { clockModel.stop() }
@@ -66,7 +66,7 @@ object state {
       override def onLapReset()  = { actionReset() ; goToState(STOPPED) }
       override def onTick()      = throw new UnsupportedOperationException("onTick")
       override def updateView()  = updateUIRuntime()
-      override def getId()       = ModelStateId.STOPPED
+      override def id()       = ModelStateId.STOPPED
     }
 
     private object RUNNING extends StopwatchState {
@@ -74,7 +74,7 @@ object state {
       override def onLapReset()  = { actionLap() ; goToState(LAP_RUNNING) }
       override def onTick()      = { actionInc() ; goToState(RUNNING) }
       override def updateView()  = updateUIRuntime()
-      override def getId()       = ModelStateId.RUNNING
+      override def id()       = ModelStateId.RUNNING
     }
 
     private object LAP_RUNNING extends StopwatchState {
@@ -82,7 +82,7 @@ object state {
       override def onLapReset()  = { goToState(RUNNING) ; actionUpdateView() }
       override def onTick()      = { actionInc() ; goToState(LAP_RUNNING) }
       override def updateView()  = updateUILaptime()
-      override def getId()       = ModelStateId.LAP_RUNNING
+      override def id()       = ModelStateId.LAP_RUNNING
     }
 
     private object LAP_STOPPED extends StopwatchState {
@@ -90,7 +90,7 @@ object state {
       override def onLapReset()  = { goToState(STOPPED) ; actionUpdateView() }
       override def onTick()      = throw new UnsupportedOperationException("onTick")
       override def updateView()  = updateUILaptime()
-      override def getId()       = ModelStateId.LAP_STOPPED
+      override def id()       = ModelStateId.LAP_STOPPED
     }
   }
 }

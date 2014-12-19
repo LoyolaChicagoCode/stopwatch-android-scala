@@ -19,7 +19,7 @@ import time.TimeModel
  * and verify that the state machine behaved as expected.
  * This also follows the XUnit Testcase Superclass pattern.
  */
-trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
+trait AbstractStateModelMockitoSpec extends JUnitSuite with MockitoSugar {
 
   trait Dependencies {
     val timeModel: TimeModel
@@ -41,7 +41,7 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
    * Verifies that we're initially in the stopped state (and told the listener
    * about it).
    */
-  @Test def testPreconditions(): Unit = {
+  @Test def preconditionsAreMet(): Unit = {
     val dep = fixtureDependency()
     val model = fixtureSUT(dep)
     model.actionInit()
@@ -54,7 +54,7 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
    * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
    * expect time 5.
    */
-  @Test def testScenarioRun(): Unit = {
+  @Test def scenarioStartWaitStopWorks(): Unit = {
     val dep = fixtureDependency()
     val model = fixtureSUT(dep)
     val t = 5
@@ -77,7 +77,7 @@ trait AbstractStateModelMockitoSpecs extends JUnitSuite with MockitoSugar {
    * expect time 5, press lap, wait 4 seconds, expect time 5, press start,
    * expect time 5, press lap, expect time 9, press lap, expect time 0.
    */
-  @Test def testScenarioRunLapReset(): Unit = {
+  @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
     val dep = fixtureDependency()
     val model = fixtureSUT(dep)
     val t1 = 5

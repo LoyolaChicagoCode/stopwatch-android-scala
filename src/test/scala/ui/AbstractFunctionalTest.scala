@@ -15,25 +15,25 @@ trait AbstractFunctionalTest {
   /** The activity to be provided by concrete subclasses of this test. */
   protected def activity(): MainActivity
 
-  @Test def testActivityExists(): Unit = assertNotNull(activity)
+  @Test def activityExists(): Unit = assertNotNull(activity)
 
-  @Test def testActivityInitialValue(): Unit = assertEquals(0, getDisplayedValue)
+  @Test def activityHasCorrectInitialValue(): Unit = assertEquals(0, displayedValue)
 
   /**
    * Verifies the following scenario: time is 0, press start, wait 5+ seconds, expect time 5.
    *
    * @throws Throwable
    */
-  @Test def testActivityScenarioRun(): Unit = {
+  @Test def scenarioStartWaitStopWorks(): Unit = {
     activity.runOnUiThread {
-      assertEquals(0, getDisplayedValue)
-      assertTrue(getStartStopButton().performClick())
+      assertEquals(0, displayedValue)
+      assertTrue(startStopButton().performClick())
     }
     Thread.sleep(5500) // <-- do not run this in the UI thread!
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(5, getDisplayedValue)
-      assertTrue(getStartStopButton.performClick())
+      assertEquals(5, displayedValue)
+      assertTrue(startStopButton.performClick())
     }
   }
 
@@ -44,52 +44,52 @@ trait AbstractFunctionalTest {
    *
    * @throws Throwable
    */
-  @Test def testActivityScenarioRunLapReset(): Unit = {
+  @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
     activity.runOnUiThread {
-      assertEquals(0, getDisplayedValue)
-      assertTrue(getStartStopButton.performClick())
+      assertEquals(0, displayedValue)
+      assertTrue(startStopButton.performClick())
     }
     Thread.sleep(5500) // <-- do not run this in the UI thread!
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(5, getDisplayedValue)
-      assertTrue(getResetLapButton.performClick())
+      assertEquals(5, displayedValue)
+      assertTrue(resetLapButton.performClick())
     }
     Thread.sleep(4000) // <-- do not run this in the UI thread!
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(5, getDisplayedValue)
-      assertTrue(getStartStopButton.performClick())
+      assertEquals(5, displayedValue)
+      assertTrue(startStopButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(5, getDisplayedValue)
-      assertTrue(getResetLapButton.performClick())
+      assertEquals(5, displayedValue)
+      assertTrue(resetLapButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(9, getDisplayedValue)
-      assertTrue(getResetLapButton.performClick())
+      assertEquals(9, displayedValue)
+      assertTrue(resetLapButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
-      assertEquals(0, getDisplayedValue)
+      assertEquals(0, displayedValue)
     }
   }
 
   // auxiliary methods for easy access to UI widgets
 
-  protected def tvToInt(t: TextView): Int = t.getText.toString.trim.toInt
+  protected def textViewToInt(t: TextView): Int = t.getText.toString.trim.toInt
 
-  def getDisplayedValue(): Int = {
+  def displayedValue(): Int = {
     val ts = activity.findView(TR.seconds)
     val tm = activity.findView(TR.minutes)
-    SEC_PER_MIN * tvToInt(tm) + tvToInt(ts)
+    SEC_PER_MIN * textViewToInt(tm) + textViewToInt(ts)
   }
 
-  protected def getStartStopButton(): Button = activity.findView(TR.startStop)
+  protected def startStopButton(): Button = activity.findView(TR.startStop)
 
-  protected def getResetLapButton(): Button  = activity.findView(TR.resetLap)
+  protected def resetLapButton(): Button  = activity.findView(TR.resetLap)
 
   /**
    * Explicitly runs tasks scheduled to run on the UI thread in case this is required

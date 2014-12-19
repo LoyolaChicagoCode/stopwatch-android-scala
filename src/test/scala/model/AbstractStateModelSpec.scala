@@ -17,7 +17,7 @@ import ModelStateId._
  * and verify that the state machine behaved as expected.
  * This also follows the XUnit Testcase Superclass pattern.
  */
-trait AbstractStateModelSpecs extends JUnitSuite {
+trait AbstractStateModelSpec extends JUnitSuite {
 
   /** Creates an instance of the home-grown unified mock dependency. */
   def fixtureDependency() = new UnifiedMockDependency
@@ -29,26 +29,26 @@ trait AbstractStateModelSpecs extends JUnitSuite {
    * Verifies that we're initially in the stopped state (and told the listener
    * about it).
    */
-  @Test def testPreconditions(): Unit = {
+  @Test def preconditionsAreMet(): Unit = {
     val dependency = fixtureDependency()
     val model = fixtureSUT(dependency)
     model.actionInit()
-    assertEquals(STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.state)
   }
 
   /**
    * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
    * expect time 5.
    */
-  @Test def testScenarioRun(): Unit = {
+  @Test def scenarioStartWaitStopWorks(): Unit = {
     val dependency = fixtureDependency()
     val model = fixtureSUT(dependency)
     model.actionInit()
-    assertEquals(0, dependency.getTime)
+    assertEquals(0, dependency.time)
     // directly invoke the button press event handler methods
     model.onStartStop()
     (1 to 5) foreach { _ => model.onTick() }
-    assertEquals(5, dependency.getTime)
+    assertEquals(5, dependency.time)
   }
 
   /**
@@ -56,34 +56,34 @@ trait AbstractStateModelSpecs extends JUnitSuite {
    * expect time 5, press lap, wait 4 seconds, expect time 5, press start,
    * expect time 5, press lap, expect time 9, press lap, expect time 0.
    */
-  @Test def testScenarioRunLapReset(): Unit = {
+  @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
     val dependency = fixtureDependency()
     val model = fixtureSUT(dependency)
     model.actionInit()
-    assertEquals(0, dependency.getTime)
+    assertEquals(0, dependency.time)
     // directly invoke the button press event handler methods on model
     model.onStartStop()
-    assertEquals(RUNNING, dependency.getState)
+    assertEquals(RUNNING, dependency.state)
     assertTrue(dependency.isStarted)
     (1 to 5) foreach { _ => model.onTick() }
-    assertEquals(5, dependency.getTime)
+    assertEquals(5, dependency.time)
     model.onLapReset()
-    assertEquals(LAP_RUNNING, dependency.getState)
+    assertEquals(LAP_RUNNING, dependency.state)
     assertTrue(dependency.isStarted)
     (1 to 4) foreach { _ => model.onTick() }
-    assertEquals(5, dependency.getTime)
+    assertEquals(5, dependency.time)
     model.onStartStop()
-    assertEquals(LAP_STOPPED, dependency.getState)
+    assertEquals(LAP_STOPPED, dependency.state)
     assertFalse(dependency.isStarted)
-    assertEquals(5, dependency.getTime)
+    assertEquals(5, dependency.time)
     model.onLapReset()
-    assertEquals(STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.state)
     assertFalse(dependency.isStarted)
-    assertEquals(9, dependency.getTime)
+    assertEquals(9, dependency.time)
     model.onLapReset()
-    assertEquals(STOPPED, dependency.getState)
+    assertEquals(STOPPED, dependency.state)
     assertFalse(dependency.isStarted)
-    assertEquals(0, dependency.getTime)
+    assertEquals(0, dependency.time)
   }
 }
 
@@ -99,8 +99,8 @@ class UnifiedMockDependency extends TimeModel with ClockModel with StopwatchUIUp
   private var lapTime = -1
   private var started = false
 
-  def getTime(): Int = timeValue
-  def getState(): ModelStateId = stateId
+  def time(): Int = timeValue
+  def state(): ModelStateId = stateId
   def isStarted(): Boolean = started
 
   override def updateTime(timeValue: Int): Unit = this.timeValue = timeValue

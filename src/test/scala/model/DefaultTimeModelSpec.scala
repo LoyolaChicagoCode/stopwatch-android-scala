@@ -3,6 +3,6 @@ package edu.luc.etl.cs313.scala.stopwatch.model
 import time.DefaultTimeModel
 
 /** A concrete testcase subclass for the time model. */
-class DefaultTimeModelSpecs extends AbstractTimeModelSpecs {
+class DefaultTimeModelSpec extends AbstractTimeModelSpec {
   override def fixture() = new DefaultTimeModel
 }
