@@ -52,12 +52,24 @@
     * System testing
     * Instrumentation testing
 * [Mock-based testing](http://martinfowler.com/articles/mocksArentStubs.html)
-* Key design patterns 
+* Key design patterns
     * Factoring out reusable test code: [Testcase Superclass pattern](http://xunitpatterns.com/Testcase%20Superclass.html)
     * Deferring method implementation to subclasses: [Template Method pattern](http://sourcemaking.com/design_patterns/template_method)
     * Allowing subclasses to decide which class to instantiate: [Factory Method pattern](http://sourcemaking.com/design_patterns/factory_method)
-
 * [Test coverage](http://en.wikipedia.org/wiki/Code_coverage) (see also [here](http://martinfowler.com/bliki/TestCoverage.html))
+* Test frameworks
+    - Unit testing and [Behavior-Driven Development (BDD)](http://en.wikipedia.org/wiki/Behavior-driven_development)
+      with [ScalaTest](http://scalatest.org)
+    - [Mock objects](http://en.wikipedia.org/wiki/Mock_object) with [Mockito](http://mockito.googlecode.com/)
+    - Functional testing (out-of-container) using [Robolectric](http://robolectric.org/)
+
+# Observations
+
+In addition to the [observations from the click counter example](https://github.com/LoyolaChicagoCode/clickcounter-android-scala/blob/master/README.md),
+the situation here is further complicated by the view updater's stronger
+dependency on its stackable mixin trait. We tackle this problem by inserting
+a test spy wrapper between the actual SUT and the mixin.
+
 
 # Building and Running
 
