@@ -1,7 +1,6 @@
 package edu.luc.etl.cs313.scala.stopwatch
 package ui
 
-import android.app.Activity
 import org.junit.Test
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
@@ -14,16 +13,16 @@ import common.ModelStateId
 trait AbstractViewUpdaterTest extends MockitoSugar with ViewTestHelper {
 
   // Scala-specific: one of the collaborators is a stackable trait (mixin).
-  // We can address this by inserting a test spy wrapper between
-  // the actual SUT and the mixin.
-  trait FakeTypedActivityHolder extends Activity with TypedActivityHolder {
+  // We can address this by mixing in a test spy wrapper between
+  // the actual SUT and the injected activity.
+  trait TypedActivitySpy extends TypedActivityHolder {
     lazy val activitySpy = spy(activity)
     override def findView[T](id: TypedResource[T]): T = activitySpy.findView(id)
   }
 
   @Test def viewUpdaterAccessesTimeTextViews(): Unit = {
     // create subject-under-test (SUT)
-    val updater = new ViewUpdater with FakeTypedActivityHolder
+    val updater = new ViewUpdater with TypedActivitySpy
     // exercise SUT
     updater.updateTime(1)
     // verify interaction with the mock
@@ -33,7 +32,7 @@ trait AbstractViewUpdaterTest extends MockitoSugar with ViewTestHelper {
 
   @Test def viewUpdaterAccessesStateName(): Unit = {
     // create subject-under-test (SUT)
-    val updater = new ViewUpdater with FakeTypedActivityHolder
+    val updater = new ViewUpdater with TypedActivitySpy
     // exercise SUT
     updater.updateState(ModelStateId.RUNNING)
     // verify interaction with the mock

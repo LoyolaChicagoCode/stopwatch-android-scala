@@ -9,8 +9,9 @@ import clock.{ClockModel, OnTickListener}
 
 /**
  * An abstract unit test for the clock model abstraction.
- * This is a unit test of an object with a listener dependency;
- * we create anonymous listeners to satisfy the dependency.
+ * This is an interaction test of an object with a listener
+ * dependency; we create anonymous listeners to satisfy the
+ * dependency and then verify the interactions.
  * This also follows the XUnit Testcase Superclass pattern.
  */
 trait AbstractClockModelSpec extends JUnitSuite {
@@ -29,11 +30,7 @@ trait AbstractClockModelSpec extends JUnitSuite {
     assertEquals(0, i.get)
   }
 
-  /**
-   * Verifies that a running clock emits about one tick event per second.
-   *
-   * @throws InterruptedException
-   */
+  /** Verifies that a running clock emits about one tick event per second. */
   @Test def runningClockTicksOncePerSec(): Unit = {
     val i = new AtomicInteger(0)
     val model = fixture(new OnTickListener {

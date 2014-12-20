@@ -67,8 +67,8 @@ trait ViewUpdater extends TypedActivity with StopwatchUIUpdateListener {
   /** Transforms a model state to an Android resource ID. */
   private def asResourceId(stateId: ModelStateId): Int = stateId match {
     case STOPPED => R.string.STOPPED
-    case RUNNING => R.string.STOPPED
-    case LAP_RUNNING => R.string.STOPPED
-    case LAP_STOPPED => R.string.STOPPED
+    case RUNNING => R.string.RUNNING
+    case LAP_RUNNING => R.string.LAP_RUNNING
+    case LAP_STOPPED => R.string.LAP_STOPPED
   }
 }

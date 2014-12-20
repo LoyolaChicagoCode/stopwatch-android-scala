@@ -49,6 +49,8 @@
 
 * [Different types of testing](http://en.wikipedia.org/wiki/Software_testing)
     * Component-level unit testing
+        * state-based testing
+        * interaction testing
     * System testing
     * Instrumentation testing
 * Key design patterns

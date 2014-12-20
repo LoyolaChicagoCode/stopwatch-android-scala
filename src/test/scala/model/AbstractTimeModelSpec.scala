@@ -9,8 +9,8 @@ import time.TimeModel
 
 /**
  * An abstract unit test for the time model abstraction.
- * This is a simple unit test of an object without dependencies.
- * This follows the XUnit Testcase Superclass pattern.
+ * This is a simple state-based unit test of an object without
+ * dependencies. It follows the XUnit Testcase Superclass pattern.
  */
 trait AbstractTimeModelSpec extends JUnitSuite {
 

@@ -14,9 +14,8 @@ trait AbstractFunctionalTest extends ViewTestHelper {
   @Test def activityHasCorrectInitialValue(): Unit = assertEquals(0, displayedValue)
 
   /**
-   * Verifies the following scenario: time is 0, press start, wait 5+ seconds, expect time 5.
-   *
-   * @throws Throwable
+   * Verifies the following scenario: time is 0, press start,
+   * wait 5+ seconds, expect time 5.
    */
   @Test def scenarioStartWaitStopWorks(): Unit = {
     activity.runOnUiThread {
@@ -35,8 +34,6 @@ trait AbstractFunctionalTest extends ViewTestHelper {
    * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
    * expect time 5, press lap, wait 4 seconds, expect time 5, press start,
    * expect time 5, press lap, expect time 9, press lap, expect time 0.
-   *
-   * @throws Throwable
    */
   @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
     activity.runOnUiThread {

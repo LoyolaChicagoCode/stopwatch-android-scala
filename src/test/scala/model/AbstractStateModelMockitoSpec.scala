@@ -14,9 +14,10 @@ import time.TimeModel
 
 /**
  * An abstract unit test for the state machine abstraction.
- * This is a unit test of an object with multiple dependencies;
- * we use a unified mock object to satisfy all dependencies
- * and verify that the state machine behaved as expected.
+ * This is an interaction test of an object with multiple
+ * dependencies; we use various dynamically generated fake
+ * objects to satisfy all dependencies and verify that the
+ * state machine behaved as expected.
  * This also follows the XUnit Testcase Superclass pattern.
  */
 trait AbstractStateModelMockitoSpec extends JUnitSuite with MockitoSugar {
