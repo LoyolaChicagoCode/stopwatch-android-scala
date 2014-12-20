@@ -17,15 +17,9 @@ class InputListenerSpec extends FunSpec with MockitoSugar {
   def fixture() = new {
     // create fake instances of the collaborators
     val mdl = mock[StopwatchModel]
-    // Scala-specific: one of the collaborators is a stackable trait (mixin).
-    // This one is a stub (as opposed to a mock) because we are not asserting
-    // or verifying anything on it.
-    trait FakeViewUpdater {
-      def updateView() = { }
-    }
-    // create subject-under-test (SUT)
-    val adapter = new InputListener with FakeViewUpdater {
-      override lazy val model = mdl // injected dependency
+    // create subject-under-test (SUT) and inject fake dependency
+    val adapter = new InputListener {
+      override lazy val model = mdl // injected fake dependency
     }
   }
 
