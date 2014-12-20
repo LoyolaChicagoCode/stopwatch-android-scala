@@ -7,9 +7,11 @@ import org.scalatest.junit.JUnitSuite
 
 /** Concrete Robolectric test subclass. */
 @RunWith(classOf[RobolectricTestRunner])
-class RobolectricFunctionalTest extends JUnitSuite with AbstractFunctionalTest {
+class RobolectricTestSuite extends JUnitSuite
+with AbstractFunctionalTest
+with AbstractViewUpdaterTest {
 
-  override protected lazy val activity =
+  override lazy val activity =
     Robolectric.buildActivity(classOf[MainActivity]).create().start().resume().get
 
   override protected def runUiThreadTasks() = Robolectric.runUiThreadTasks()

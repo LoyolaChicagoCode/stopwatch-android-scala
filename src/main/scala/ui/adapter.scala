@@ -1,7 +1,6 @@
 package edu.luc.etl.cs313.scala.stopwatch
 package ui
 
-import android.app.Activity
 import android.view.View
 import common._
 
@@ -33,7 +32,7 @@ trait InputListener {
  * A view updater mixin as part of the Adapter in the Model-View-Adapter pattern.
  * It implements the `updateView` method to update the view from the model.
  */
-trait ViewUpdater extends Activity with TypedActivityHolder with StopwatchUIUpdateListener {
+trait ViewUpdater extends TypedActivity with StopwatchUIUpdateListener {
 
   /**
    * Updates the seconds and minutes in the UI. It is this UI adapter's
@@ -60,7 +59,7 @@ trait ViewUpdater extends Activity with TypedActivityHolder with StopwatchUIUpda
   /** Wraps a block of code in a Runnable and runs it on the UI thread. */
   def runOnUiThread(block: => Unit): Unit =
     runOnUiThread(new Runnable() {
-      override def run(): Unit = block
+      override def run() = block
     })
 
   import ModelStateId._

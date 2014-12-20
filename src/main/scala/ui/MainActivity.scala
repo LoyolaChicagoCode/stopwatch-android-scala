@@ -14,7 +14,7 @@ import model.ConcreteStopwatchModelFacade
  * model. The model implementation is configured externally via the resource
  * R.string.model_class.
  */
-class MainActivity extends Activity with TypedActivity with InputListener with ViewUpdater {
+class MainActivity extends Activity with InputListener with ViewUpdater {
 
   private val TAG = "stopwatch-android-scala"
 

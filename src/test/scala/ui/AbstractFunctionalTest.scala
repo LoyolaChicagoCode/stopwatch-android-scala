@@ -1,19 +1,13 @@
-package edu.luc.etl.cs313.scala.stopwatch
-package ui
+package edu.luc.etl.cs313.scala.stopwatch.ui
 
-import android.widget.{Button, TextView}
 import org.junit.Assert._
 import org.junit.Test
-import common.TimeConstants.SEC_PER_MIN
 
 /**
  * Abstract GUI-level test superclass of several essential stopwatch scenarios.
  * This follows the XUnit Testcase Superclass pattern.
  */
-trait AbstractFunctionalTest {
-
-  /** The activity to be provided by concrete subclasses of this test. */
-  protected def activity(): MainActivity
+trait AbstractFunctionalTest extends ViewTestHelper {
 
   @Test def activityExists(): Unit = assertNotNull(activity)
 
@@ -76,20 +70,6 @@ trait AbstractFunctionalTest {
       assertEquals(0, displayedValue)
     }
   }
-
-  // auxiliary methods for easy access to UI widgets
-
-  protected def textViewToInt(t: TextView): Int = t.getText.toString.trim.toInt
-
-  def displayedValue(): Int = {
-    val ts = activity.findView(TR.seconds)
-    val tm = activity.findView(TR.minutes)
-    SEC_PER_MIN * textViewToInt(tm) + textViewToInt(ts)
-  }
-
-  protected def startStopButton(): Button = activity.findView(TR.startStop)
-
-  protected def resetLapButton(): Button  = activity.findView(TR.resetLap)
 
   /**
    * Explicitly runs tasks scheduled to run on the UI thread in case this is required
