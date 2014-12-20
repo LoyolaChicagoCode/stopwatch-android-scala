@@ -51,7 +51,6 @@
     * Component-level unit testing
     * System testing
     * Instrumentation testing
-* [Mock-based testing](http://martinfowler.com/articles/mocksArentStubs.html)
 * Key design patterns
     * Factoring out reusable test code: [Testcase Superclass pattern](http://xunitpatterns.com/Testcase%20Superclass.html)
     * Deferring method implementation to subclasses: [Template Method pattern](http://sourcemaking.com/design_patterns/template_method)
@@ -60,7 +59,7 @@
 * Test frameworks
     - Unit testing and [Behavior-Driven Development (BDD)](http://en.wikipedia.org/wiki/Behavior-driven_development)
       with [ScalaTest](http://scalatest.org)
-    - [Mock objects](http://en.wikipedia.org/wiki/Mock_object) with [Mockito](http://mockito.googlecode.com/)
+    - [Mock objects](http://en.wikipedia.org/wiki/Mock_object) with [Mockito](http://mockito.github.io)
     - Functional testing (out-of-container) using [Robolectric](http://robolectric.org/)
 
 # Observations
