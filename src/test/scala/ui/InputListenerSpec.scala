@@ -8,8 +8,9 @@ import org.scalatest.mock.MockitoSugar
 import common.StopwatchModel
 
 /**
- * A concrete unit test of InputListener that uses stubbing and mocking
- * to replace the real dependencies (collaborators).
+ * A concrete unit test for InputListener that uses stubbing and mocking
+ * to replace the real dependencies (collaborators) and test the
+ * interactions.
  */
 class InputListenerSpec extends FunSpec with MockitoSugar {
 

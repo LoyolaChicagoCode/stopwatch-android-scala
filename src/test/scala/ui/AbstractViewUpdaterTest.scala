@@ -9,8 +9,8 @@ import common.ModelStateId
 /**
  * An abstract unit test for the view updater.
  * This is an interaction test of an object with dependencies
- * (collaborators); specifically to Scala, one of the dependencies
- * is a stackable trait (mixin). We can address this by mixing in
+ * (collaborators). Specifically to Scala, one of the dependencies
+ * is a stackable trait (mixin); we can handle this by mixing in
  * a test spy wrapper between the actual SUT and the injected activity.
  * This test follows the XUnit Testcase Superclass pattern.
  */
