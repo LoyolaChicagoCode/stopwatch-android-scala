@@ -3,6 +3,7 @@ package ui
 
 import android.view.View
 import common._
+import edu.luc.etl.cs313.scala.stopwatch.common.ModelStateId.{LAP_STOPPED, LAP_RUNNING, RUNNING, STOPPED}
 
 /**
  * An input listener mixin as part of the Adapter in the Model-View-Adapter pattern.
@@ -53,7 +54,7 @@ trait ViewUpdater extends TypedActivity with StopwatchUIUpdateListener {
    */
   def updateState(stateId: ModelStateId): Unit = runOnUiThread {
     val stateName = findView(TR.stateName)
-    stateName.setText(getString(asResourceId(stateId)))
+    stateName.setText(getString(ViewUpdater.resourceIdFor(stateId)))
   }
 
   /** Wraps a block of code in a Runnable and runs it on the UI thread. */
@@ -61,14 +62,15 @@ trait ViewUpdater extends TypedActivity with StopwatchUIUpdateListener {
     runOnUiThread(new Runnable() {
       override def run() = block
     })
+}
 
+object ViewUpdater {
   import ModelStateId._
-
-  /** Transforms a model state to an Android resource ID. */
-  private def asResourceId(stateId: ModelStateId): Int = stateId match {
-    case STOPPED => R.string.STOPPED
-    case RUNNING => R.string.RUNNING
-    case LAP_RUNNING => R.string.LAP_RUNNING
-    case LAP_STOPPED => R.string.LAP_STOPPED
-  }
+  /** Maps a model state to an Android resource ID. */
+  val resourceIdFor = Map[ModelStateId, Int](
+    STOPPED -> R.string.STOPPED,
+    RUNNING -> R.string.RUNNING,
+    LAP_RUNNING -> R.string.LAP_RUNNING,
+    LAP_STOPPED -> R.string.LAP_STOPPED
+  )
 }
