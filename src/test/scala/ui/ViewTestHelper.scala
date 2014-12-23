@@ -12,7 +12,9 @@ trait ViewTestHelper {
   /** The activity to be provided by concrete subclasses of this test. */
   def activity(): MainActivity
 
-  protected def textViewToInt(t: TextView): Int = t.getText.toString.trim.toInt
+  def textViewToInt(t: TextView): Int = t.getText.toString.trim.toInt
+
+  def displayedState(): String = activity.findView(TR.stateName).getText.toString.trim
 
   def displayedValue(): Int = {
     val ts = activity.findView(TR.seconds)
@@ -20,9 +22,9 @@ trait ViewTestHelper {
     SEC_PER_MIN * textViewToInt(tm) + textViewToInt(ts)
   }
 
-  protected def startStopButton(): Button = activity.findView(TR.startStop)
+  def startStopButton(): Button = activity.findView(TR.startStop)
 
-  protected def resetLapButton(): Button  = activity.findView(TR.resetLap)
+  def resetLapButton(): Button  = activity.findView(TR.resetLap)
 
-
+  def getString(resourceId: Int): String = activity.getString(resourceId)
 }

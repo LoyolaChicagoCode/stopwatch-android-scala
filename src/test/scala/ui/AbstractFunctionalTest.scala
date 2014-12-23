@@ -38,33 +38,39 @@ trait AbstractFunctionalTest extends ViewTestHelper {
   @Test def scenarioStartWaitLapWaitStopLapResetWorks(): Unit = {
     activity.runOnUiThread {
       assertEquals(0, displayedValue)
+      assertEquals(getString(R.string.STOPPED), displayedState)
       assertTrue(startStopButton.performClick())
     }
     Thread.sleep(5500) // <-- do not run this in the UI thread!
     runUiThreadTasks()
     activity.runOnUiThread {
       assertEquals(5, displayedValue)
+      assertEquals(getString(R.string.RUNNING), displayedState)
       assertTrue(resetLapButton.performClick())
     }
     Thread.sleep(4000) // <-- do not run this in the UI thread!
     runUiThreadTasks()
     activity.runOnUiThread {
       assertEquals(5, displayedValue)
+      assertEquals(getString(R.string.LAP_RUNNING), displayedState)
       assertTrue(startStopButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
+      assertEquals(getString(R.string.LAP_STOPPED), displayedState)
       assertEquals(5, displayedValue)
       assertTrue(resetLapButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
       assertEquals(9, displayedValue)
+      assertEquals(getString(R.string.STOPPED), displayedState)
       assertTrue(resetLapButton.performClick())
     }
     runUiThreadTasks()
     activity.runOnUiThread {
       assertEquals(0, displayedValue)
+      assertEquals(getString(R.string.STOPPED), displayedState)
     }
   }
 
@@ -73,5 +79,5 @@ trait AbstractFunctionalTest extends ViewTestHelper {
    * by the testing framework, e.g., Robolectric. When this is not required,
    * it should be overridden with an empty method.
    */
-  protected def runUiThreadTasks(): Unit
+  def runUiThreadTasks(): Unit
 }
