@@ -18,7 +18,7 @@ class InputListenerSpec extends FunSpec with MockitoSugar {
   def fixture() = new {
     // create fake instances of the collaborators
     val mdl = mock[StopwatchModel]
-    // create subject-under-test (SUT) and inject fake dependency
+    // create system-under-test (SUT) and inject fake dependency
     val adapter = new InputListener {
       override lazy val model = mdl // injected fake dependency
     }

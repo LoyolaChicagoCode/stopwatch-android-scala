@@ -22,7 +22,7 @@ trait AbstractViewUpdaterTest extends MockitoSugar with ViewTestHelper {
   }
 
   @Test def viewUpdaterAccessesTimeTextViews(): Unit = {
-    // create subject-under-test (SUT)
+    // create system-under-test (SUT)
     val updater = new ViewUpdater with TypedActivitySpy
     // exercise SUT
     updater.updateTime(1)
@@ -32,7 +32,7 @@ trait AbstractViewUpdaterTest extends MockitoSugar with ViewTestHelper {
   }
 
   @Test def viewUpdaterAccessesStateName(): Unit = {
-    // create subject-under-test (SUT)
+    // create system-under-test (SUT)
     val updater = new ViewUpdater with TypedActivitySpy
     // exercise SUT
     updater.updateState(ModelStateId.RUNNING)
